@@ -27,10 +27,12 @@ export class Core {
 
     const status = await myParcel.getStatusParcel(carrier, barcode)
 
-    if (!status) {
+    if (!status || status.error) {
       return {
         ok: false,
-        message: 'Нет данных о статусе посылки'
+        message: status.error
+          ? `Нет данных, ошибка: ${status.error}`
+          : 'Нет данных о статусе посылки'
       }
     }
 
